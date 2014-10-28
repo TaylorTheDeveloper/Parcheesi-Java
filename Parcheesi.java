@@ -33,6 +33,10 @@ boardSize-1,boardSize-1 = p4
 
 
 public class Parcheesi  extends JFrame {
+	final int boardSize = 15;
+	final int[] playerX = {0, 0, boardSize-1, boardSize-1};
+	final int[] playerY = {boardSize-1, 0, 0, boardSize-1};
+	final Color[] playerColors = {Color.red, Color.green, Color.yellow, Color.blue};
 	final int MENU_ITEMS = 6;
 	//movement delay
 	long time = 500;
@@ -45,9 +49,10 @@ public class Parcheesi  extends JFrame {
 	JButton quit;
 	//
 	int NUMPLAYERS;
-	int boardSize = 15;
+	boolean hasPlayerRolled;
 	int diceValue = 1;
 	JButton board[][];
+	Player[] players;
 
 	public static void main (String[] args){
 		new Parcheesi();
@@ -63,13 +68,18 @@ public class Parcheesi  extends JFrame {
 		int playerCounter = 0;
 		//traverse(0,boardSize-1,3);//p1
 		//traverse(0,0,3);//p2
-		traverse(boardSize-1,0,37);//p3
-		traverse(0,7,37);//p3
+		//traverse(boardSize-1,0,37);//p3
+		//traverse(0,7,37);//p3
 		//traverse(boardSize-1,boardSize-1,5);//p4
 		while(run){
 			//Player Increment
+			hasPlayerRolled = false;
 			playerCounter = (playerCounter+1)%NUMPLAYERS;
 			playerTurn.setText("Turn: "+playerCounter+1);//Always Player 1's turn)
+			while(hasPlayerRolled==false){
+				//do nothing until roll
+			}
+			System.out.println("pimps and whore");
 
 			//RollDice
 			//Traverse
@@ -109,6 +119,13 @@ public class Parcheesi  extends JFrame {
 		playerView = new JLabel("Players: "+NUMPLAYERS);
 		diceView = new JLabel("Roll: ");
 
+		//Initliize Players and Tokens Here
+		players = new Player[NUMPLAYERS];
+		for(int i = 0; i < NUMPLAYERS; i++){
+			players[i] = new Player((i+1),playerColors[i],playerX[i],playerY[i]);
+		}
+
+
 		//Button Listeners
 		quit.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e){
@@ -128,6 +145,7 @@ public class Parcheesi  extends JFrame {
 		        diceValue = rollDice();
 		        diceView.setText("Roll: " + Integer.toString(diceValue));
 		        rollDice.setEnabled(false);
+		        hasPlayerRolled = true;
 		        //Ask which piece to move with dialog
 		      }
 		    });
@@ -170,8 +188,8 @@ public class Parcheesi  extends JFrame {
     	colorLanes();
     	colorSafeZones();
 
-    	frame.setResizable(true);
-		//frame.setSize(500, 500);
+    	frame.setResizable(false);
+    	frame.pack();
 		frame.setVisible(true);
 	}
 
@@ -259,5 +277,83 @@ public void traverse(int x, int y, int roll){
 	}
 }
 
+}
+//Player Class
+class Player{
+	Color color;
+	int id;
+	Token[] tokens;
+
+	public Player(){
+		id = 0;
+		color = Color.red;
+		tokens = new Token[4];
+	}
+
+	public Player(int pid,Color c,int startx, int starty){
+		id = pid;
+		color = c;
+		tokens = new Token[4];
+		for(int i=0;i<4;i++){
+			//tokens[i].setNewPos(startx,starty);
+			//tokens[i].setColor(c);
+			//tokens[i].safe();//All are safe, not on board yet			
+		}
+	}
+
+	public Color getColor(){
+		return color;
+	}
+
+	public void setColor(Color c){
+		color = c;
+	}
+
+}
+
+//Player Token
+class Token {
+	int x, y;//pos x,y
+	boolean safe;
+
+	public Token(){
+		x = 0;
+		y = 0;
+		boolean safe = true;
+	}
+
+	public boolean isSafe(){
+		return safe;
+	}
+
+	public void safe(){
+		safe = true;
+	}
+
+	public void notSafe(){
+		safe = false;
+	}
+
+	public int getX(){
+		return x;
+	}
+
+	public int getY(){
+		return y;
+	}
+
+	public void setX(int p){
+		x = p;
+	}
+
+	public void getY(int p){
+		y = p;
+	}
+
+	//SetNewPosition
+	public void setNewPos(int a, int b){
+		x = a;
+		y = b;
+	}
 
 }
