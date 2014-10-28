@@ -32,11 +32,14 @@ boardSize-1,boardSize-1 = p4
 
 
 
-public class Parcheesi  extends JFrame implements KeyListener {
+public class Parcheesi  extends JFrame {
+	final int MENU_ITEMS = 6;
 	//movement delay
 	long time = 500;
 	//diceview so user can see what they rolled
 	JLabel diceView;
+	JLabel playerView;
+	JLabel playerTurn;
 	JButton rollDice;
 	JButton restart;
 	JButton quit;
@@ -66,6 +69,8 @@ public class Parcheesi  extends JFrame implements KeyListener {
 		while(run){
 			//Player Increment
 			playerCounter = (playerCounter+1)%NUMPLAYERS;
+			playerTurn.setText("Turn: "+playerCounter+1);//Always Player 1's turn)
+
 			//RollDice
 			//Traverse
 			//CheckWin
@@ -76,7 +81,6 @@ public class Parcheesi  extends JFrame implements KeyListener {
 	}
 	/* Initilize Game Board */
 	public void init(){
-		final int MENU_ITEMS = 4;
 		NUMPLAYERS = 0;
 		//Menu Buttons
 		rollDice = new JButton("Roll Dice");
@@ -86,8 +90,6 @@ public class Parcheesi  extends JFrame implements KeyListener {
 		JFrame frame = new JFrame("Shape Project"); 
 		JPanel contentPane = new JPanel();     
 		board = new JButton [boardSize][boardSize];
-		//Labels
-		diceView = new JLabel("Roll:");
 		//Dialog for how many players?
 		//JOptionPane optionPane = new JOptionPane("How Many Players?",  JOptionPane.QUESTION_MESSAGE);
 		while(NUMPLAYERS > 4 || NUMPLAYERS < 1){
@@ -101,6 +103,11 @@ public class Parcheesi  extends JFrame implements KeyListener {
 			NUMPLAYERS = Integer.parseInt(x);
 			//
 		}
+
+		//Labels
+		playerTurn = new JLabel("Turn: "+1);//Always Player 1's turn
+		playerView = new JLabel("Players: "+NUMPLAYERS);
+		diceView = new JLabel("Roll: ");
 
 		//Button Listeners
 		quit.addActionListener(new ActionListener(){
@@ -142,6 +149,8 @@ public class Parcheesi  extends JFrame implements KeyListener {
 		panel_menu.setLayout(new GridLayout(MENU_ITEMS,1));
 
 		//Add Menu Items
+		panel_menu.add(playerView);
+		panel_menu.add(playerTurn);
 		panel_menu.add(diceView);
 		panel_menu.add(rollDice);
 		panel_menu.add(restart);
@@ -251,29 +260,4 @@ public void traverse(int x, int y, int roll){
 }
 
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			//press = true;
-			}
-		if (e.getKeyCode() == KeyEvent.VK_C){
-			//color = color+1;
-			//color = color % colors.length;
-			}
-		if (e.getKeyCode() == KeyEvent.VK_Q){
-			System.exit(0);
-			}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }
