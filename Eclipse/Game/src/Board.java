@@ -12,12 +12,14 @@ public class Board extends JPanel {
 	private ArrayList<Point> points;
 	private int SIZE = 40;
 	public Token t;
-	public Player p;
+	public Player[] p;
 
-	public Board() {
-		setBackground(Color.WHITE);
-		t = new Token();
-		p = new Player(0);
+	public Board(int numPlayers) {
+		//t = new Token();
+		p = new Player[numPlayers];
+		for(int i = 0; i< numPlayers;i++ ){
+			p[i] = new Player(i);
+		}
 	}
 
 	/*
@@ -46,6 +48,12 @@ public class Board extends JPanel {
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
+	
+	public void paintPlayerOverlay(Graphics g){
+		for(int i = 0; i< p.length;i++ ){
+			p[i].update(g);
+		}		
+	}
 
 	public void paint(Graphics g) {
 		points = new ArrayList<Point>();
@@ -59,13 +67,14 @@ public class Board extends JPanel {
 		Color blue = new Color(0, 0, 255);
 		Color green = new Color(0, 255, 0);
 		Color yellow = new Color(255, 255, 0);
-		Color safeBorder = new Color(255, 0, 0);
+		Color safeBorder = new Color(0, 255, 0);
 		Color safeFill = new Color(0, 150, 150);
 		Color base = new Color(0, 179, 21);
 		//
 		// t.draw(g);
-		p.update(g);
 		//
+		//
+		
 		// Left, top
 		for (int k = 0; k < 7; k++) {
 			g.setColor(tile);
@@ -87,6 +96,8 @@ public class Board extends JPanel {
 		// Top, Center
 		g.setColor(red);// SafeZone
 		g.fillRect(x, y, w, h);
+		g.setColor(tile);// SafeZone
+		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
 		x += size;
 
@@ -113,6 +124,8 @@ public class Board extends JPanel {
 		x -= size;
 		g.setColor(blue);// SafeZone
 		g.fillRect(x, y, w, h);
+		g.setColor(tile);// SafeZone
+		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
 		y += size;
 
@@ -137,6 +150,8 @@ public class Board extends JPanel {
 		// bottom, Center
 		g.setColor(green);// SafeZone
 		g.fillRect(x, y, w, h);
+		g.setColor(tile);// SafeZone
+		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
 		x -= size;
 
@@ -163,6 +178,8 @@ public class Board extends JPanel {
 		x += size;
 		g.setColor(yellow);// SafeZone
 		g.fillRect(x, y, w, h);
+		g.setColor(tile);// SafeZone
+		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
 		x += size;
 
@@ -206,6 +223,6 @@ public class Board extends JPanel {
 			y += size;
 		}
 
-		System.out.println(points.size());
+		paintPlayerOverlay(g);
 	}
 }

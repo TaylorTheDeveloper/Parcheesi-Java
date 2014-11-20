@@ -32,6 +32,7 @@ class Player extends JPanel {
 			color = new Color(165, 42, 42);//Garnet
 			break;
 		default: 
+			p = new Point(20,20);
 			color = new Color(255, 185, 15);//This should never happen
 		
 		}

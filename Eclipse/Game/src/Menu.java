@@ -18,21 +18,16 @@ class Menu extends JPanel{
 		/*
 		 * Load Menu Images
 		 */
-	    help = new ImageIcon();
-	    reset  = new ImageIcon();
-	    quit  = new ImageIcon();
-	    dice  = new ImageIcon();
+	    //This Can Wait
+//	    help = new ImageIcon("help.png");
+//	    reset  = new ImageIcon("reset.png");
+//	    quit  = new ImageIcon("quit.png");
+//	    dice  = new ImageIcon("dice.png");
 		
 		/*
 		 * Add Menu Buttons
 		 */
-	    
-		addButton(this, "Roll Dice",null, new ActionListener() {
-	      public void actionPerformed(ActionEvent evt) {
-	    	  Parchessi.roll();
-	        }
-	      });
-		
+	    	
 		addButton(this, "Help/Instructions",null, new ActionListener() {
 	        public void actionPerformed(ActionEvent evt) {
 	        	String info = "Goal: \n\tGet all of your tokens arround the board,"
@@ -48,22 +43,49 @@ class Menu extends JPanel{
 
 	      addButton(this, "Exit Game",null, new ActionListener() {
 	        public void actionPerformed(ActionEvent evt) {
-	          System.exit(0);
+	        	if(areYouSure()){
+	        		System.exit(0);
+	          }
 	        }
 	      });
 	      
 			addButton(this, "New Game",null, new ActionListener() {
 		        public void actionPerformed(ActionEvent evt) {
-		          //System.exit(0);
-
-		        	Game.reset();
+		          if(areYouSure()){
+			        	Game.reset();
+		          }
 		        }
 		      });
 		
+			addButton(this, "Roll Dice",null, new ActionListener() {
+			      public void actionPerformed(ActionEvent evt) {
+			    	  Parchessi.roll();
+			        }
+			      });
+		
 	}
+	
+	//button generator
 	  public void addButton(Container c, String title, ImageIcon img, ActionListener a) {
 		    JButton b = new JButton(title);
 		    c.add(b);
 		    b.addActionListener(a);
 		  }
+	  
+	//areYouSure? yes/no dialog generator
+	  //Returns True for yes, False for no
+	  public boolean areYouSure(){
+				String[] options = { "Yes!", "No!" };
+				String x = (String) JOptionPane.showInputDialog(null, 
+										"Are You Sure?","Parcheesi",
+										JOptionPane.QUESTION_MESSAGE, 
+										null, options, options[0]); 	        
+				if(x=="Yes!"){
+					return true;
+				}
+				else{
+					return false;
+				}
+		  
+	  }
 }
