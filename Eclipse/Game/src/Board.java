@@ -4,18 +4,18 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-//Red, Blue, and Green are safeBorder zones
 
-public class Rectangles extends JPanel {
+
+public class Board extends JPanel {
 	private ArrayList<Point> points;
 	private int SIZE = 40;
 	public Token t;
 	public Player p;
 
-	public Rectangles() {
+	public Board() {
+		setBackground(Color.WHITE);
 		t = new Token();
 		p = new Player(0);
 	}
@@ -206,89 +206,6 @@ public class Rectangles extends JPanel {
 			y += size;
 		}
 
-		// System.out.println(points.size());
-	}
-}
-
-class Token extends JPanel {
-	int id;
-	int position;
-
-	public Token() {
-		id = 1;
-		position = 0;
-	}
-
-	public Token(int p) {
-		id = 1;
-		position = p;
-	}
-
-	public void draw(Graphics g) {
-		// super.paint(g);
-		if (position == 0) {
-			g.drawRect(20, 20, 20, 20);
-		} else {
-			g.fillRect(50, 50, 20, 20);
-		}
-
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int x) {
-		position = x;
-	}
-}
-
-class Player extends JPanel {
-	final int NUM_TOKENS = 4;
-	int pid;//Player id
-	Point p;//Player info
-	Point start;//Starting point for pieces
-	Color color;
-	Token a, b, c, d;
-
-	public Player(int id) {
-		switch(id){
-		case 0:
-			p = new Point(20,20);
-			color = new Color(255, 185, 15);//Orange
-			break;
-		case 1:
-			p = new Point(780,20);
-			color = new Color(30, 144, 255);//dodgerblue
-			break;
-		case 2:
-			p = new Point(20,780);
-			color = new Color(205, 0, 205);//Magenta
-			break;
-		case 3:
-			p = new Point(20,780);
-			color = new Color(165, 42, 42);//Garnet
-			break;
-		default: 
-			color = new Color(255, 185, 15);//This should never happen
-		
-		}
-		a = new Token(5);
-		b = new Token(10);
-		c = new Token(20);
-		d = new Token();
-	}
-
-	public void update(Graphics g) {
-		//Update Player Info
-		g.setColor(Color.BLACK);
-		g.drawString("Player " + pid, p.x+8, p.y+15);
-		g.setColor(color);
-		g.drawRect(p.x, p.y, 150, 150);
-		//Update Tokens
-		a.draw(g);
-		b.draw(g);
-		c.draw(g);
-		d.draw(g);
+		System.out.println(points.size());
 	}
 }
