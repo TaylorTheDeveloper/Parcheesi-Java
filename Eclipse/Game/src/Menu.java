@@ -10,19 +10,10 @@ import javax.swing.JPanel;
 
 
 class Menu extends JPanel{
-	ImageIcon help,reset,quit,dice;
 	
 	/* Add's a button to the Panel */
 	public Menu(){
-	    setBackground(new Color(72,209,204)); 
-		/*
-		 * Load Menu Images
-		 */
-	    //This Can Wait
-//	    help = new ImageIcon("help.png");
-//	    reset  = new ImageIcon("reset.png");
-//	    quit  = new ImageIcon("quit.png");
-//	    dice  = new ImageIcon("dice.png");
+	    setBackground(new Color(72,209,204));
 		
 		/*
 		 * Add Menu Buttons
@@ -52,7 +43,7 @@ class Menu extends JPanel{
 			addButton(this, "New Game",null, new ActionListener() {
 		        public void actionPerformed(ActionEvent evt) {
 		          if(areYouSure()){
-			        	Game.reset();
+			        	Parchessi.reset();
 		          }
 		        }
 		      });

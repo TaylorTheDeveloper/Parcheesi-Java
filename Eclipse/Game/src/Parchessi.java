@@ -15,36 +15,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-public class Game {
-	private static JFrame gameFrame;
-	 public static void main(String[] args) {
-		 gameFrame = new Parchessi();
-		  }
-	 
-	 public static void reset(){
-		 gameFrame.setVisible(false); //you can't see me!
-		 gameFrame.dispose();
-		 gameFrame = new Parchessi();
-	 }
-}
-
 class Parchessi extends JFrame{
-	Board b;
-	Menu m,n;
+	public static Board b;
+	public Menu m;
 	static int numPlayers;
-	ArrayList<Point> boardPoints;
-	JPanel mContainer;
+	public JPanel mContainer;
 	public static int roll;
-	static JLabel rollView;
+	public static JLabel rollView;
+	private static JFrame gameFrame;
 	
 	public Parchessi(){
-		numPlayers = 0;
-		chooseNumPlayers();
+		
+		//Set and Initilize Number of Players
+		numPlayers = 4;
+		//chooseNumPlayers();
+		
+		//Initilize Board and Menu
 		b = new Board(numPlayers);
 		m = new Menu();
-		boardPoints = b.getPoints();
-		//System.out.println(boardPoints.get(10));
+		
+		//Game Panel Stuff
 		mContainer = new JPanel();
 		rollView = new JLabel("    Roll: ");//Always Player 1's turn
 		rollView.setBorder(new EmptyBorder(5, 5, 5, 5) );
@@ -58,17 +48,36 @@ class Parchessi extends JFrame{
 	    setResizable(false);
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		//setSize( 725, 850 );
-		setBounds(20,20,725,850);
+		setBounds(-900,200,725,850);
 		setVisible( true );
 	}
 	
-	public static int roll(){
-		Random diceRoller = new Random();
-		int roll = diceRoller.nextInt(12) + 1;//Roll Two Dice
-		rollView.setText("    Roll: " + Integer.toString(roll));
-		return roll;
+	public static Board getBoard(){
+		return b;
 	}
 	
+	/*
+	 * Roll Dice. If both Dice are equal, Player can go again
+	 * 
+	 */
+	public static int roll(){
+		Random diceRoller = new Random();
+		int roll = diceRoller.nextInt(6) + 1;//Roll first Dice
+		int roll2 = diceRoller.nextInt(6) + 1;//Roll second Dice
+		
+		if(roll == roll2){
+			//Set Roll Again Condition to True
+		}
+		roll += roll2;
+		rollView.setText("    Roll: " + Integer.toString(roll));
+		System.out.println("Dice Rolled in roll() with value " + roll);
+		
+		//Now Update
+		return roll;
+	}
+	/*
+	 * Choose Number of Players with Error Bounds Checking
+	 */
 	public static void chooseNumPlayers(){
 		while(numPlayers > 4 || numPlayers < 1){
 			String[] options = { "1", "2", "3", "4" };
@@ -80,6 +89,25 @@ class Parchessi extends JFrame{
 			numPlayers = Integer.parseInt(x);
 		}
 	}
+		 
+	/*
+	 * Resets the Game
+	 */
+	 public static void reset(){
+		 gameFrame.setVisible(false); //you can't see me!
+		 gameFrame.dispose();
+		 gameFrame = new Parchessi();
+	 }
+	 
+	 public static void move(){
+		 
+	 }
+
+	public static void main(String[] args) {
+		 gameFrame = new Parchessi();		 
+		 
+		 
+		  }
 		
 }
 

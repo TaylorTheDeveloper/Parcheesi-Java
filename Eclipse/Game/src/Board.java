@@ -4,14 +4,23 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 
 public class Board extends JPanel {
+	public Color tile = new Color(0, 0, 0);
+	public Color red = new Color(255, 0, 0);
+	public Color blue = new Color(0, 0, 255);
+	public Color green = new Color(0, 255, 0);
+	public Color yellow = new Color(255, 255, 0);
+	public Color safeBorder = new Color(0, 255, 0);
+	public Color safeFill = new Color(0, 150, 150);
+	public Color base = new Color(0, 179, 21);
 	private ArrayList<Point> points;
 	private int SIZE = 40;
-	public Token t;
+	//public Token t;
 	public Player[] p;
 
 	public Board(int numPlayers) {
@@ -34,8 +43,14 @@ public class Board extends JPanel {
 	/*
 	 * Returns Point List Length
 	 */
-	public int getLength() {
+	public int getPointLength() {
 		return points.size();
+	}
+	
+	public void printPoints(){
+		for(int i =0; i < points.size();i++){
+			System.out.println(points.get(i));
+		}
 	}
 
 	/*
@@ -49,31 +64,42 @@ public class Board extends JPanel {
 		repaint();
 	}
 	
+	public void move(){
+		for(int i = 0; i < 5; i++){
+//			try {
+//			    //Thread.sleep(1000);
+//				//p[2].setPoint(150,150); 
+//				System.out.println(i);
+//			} catch(InterruptedException ex) {
+//			    Thread.currentThread().interrupt();
+//			}
+		}
+	}
+	
 	public void paintPlayerOverlay(Graphics g){
 		for(int i = 0; i< p.length;i++ ){
 			p[i].update(g);
 		}		
+		move();
+		
+		
+//		String[] options = { "1", "2", "3", "4" };
+//		String x = (String) JOptionPane.showInputDialog(null, 
+//								"How Many Players? (1-4)","Parcheesi",
+//								JOptionPane.QUESTION_MESSAGE, 
+//								null, options, options[0]);
+//		p[2].setPoint(150,150);
+		//p[0].update(g);
 	}
 
 	public void paint(Graphics g) {
+		super.paint(g);
 		points = new ArrayList<Point>();
 		int size = SIZE;
 		int x = 15;// starting
 		int y = 315;
 		int w = size;
 		int h = size;
-		Color tile = new Color(0, 0, 0);
-		Color red = new Color(255, 0, 0);
-		Color blue = new Color(0, 0, 255);
-		Color green = new Color(0, 255, 0);
-		Color yellow = new Color(255, 255, 0);
-		Color safeBorder = new Color(0, 255, 0);
-		Color safeFill = new Color(0, 150, 150);
-		Color base = new Color(0, 179, 21);
-		//
-		// t.draw(g);
-		//
-		//
 		
 		// Left, top
 		for (int k = 0; k < 7; k++) {
