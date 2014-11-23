@@ -10,18 +10,18 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel {
-	public Color tile = new Color(0, 0, 0);
-	public Color red = new Color(255, 0, 0);
-	public Color blue = new Color(0, 0, 255);
-	public Color green = new Color(0, 255, 0);
-	public Color yellow = new Color(255, 255, 0);
-	public Color safeBorder = new Color(0, 255, 0);
-	public Color safeFill = new Color(0, 150, 150);
-	public Color base = new Color(0, 179, 21);
+	private Color tile = new Color(0, 0, 0);
+	private Color red = new Color(255, 0, 0);
+	private Color blue = new Color(0, 0, 255);
+	private Color green = new Color(0, 255, 0);
+	private Color yellow = new Color(255, 255, 0);
+	private Color safeBorder = new Color(0, 255, 0);
+	private Color safeFill = new Color(0, 150, 150);
+	private Color base = new Color(0, 179, 21);
 	private ArrayList<Point> points;
 	private int SIZE = 40;
 	//public Token t;
-	public Player[] p;
+	private Player[] p;
 
 	public Board(int numPlayers) {
 		//t = new Token();

@@ -9,12 +9,12 @@ import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 class Parchessi extends JFrame{
-	public static Board b;
-	public Menu m;
-	static int numPlayers;
-	public JPanel mContainer;
-	public static int roll;
-	public static JLabel rollView;
+	private static Board b;
+	private Menu m;
+	private static int numPlayers;
+	private JPanel mContainer;
+	private static int roll;
+	private static JLabel rollView;
 	private static JFrame gameFrame;
 	
 	public Parchessi(){
