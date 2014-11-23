@@ -49,11 +49,11 @@ class Menu extends JPanel{
 		        }
 		      });
 		
-			addButton(this, "Roll Dice",null, new ActionListener() {
-			      public void actionPerformed(ActionEvent evt) {
-			    	  Parchessi.roll();
-			        }
-			      });
+//			addButton(this, "Roll Dice",null, new ActionListener() {
+//			      public void actionPerformed(ActionEvent evt) {
+//			    	  Parchessi.roll();
+//			        }
+//			      });
 		
 	}
 	

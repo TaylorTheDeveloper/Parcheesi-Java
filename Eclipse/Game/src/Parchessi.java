@@ -1,6 +1,9 @@
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,9 +18,17 @@ class Parchessi extends JFrame{
 	private JPanel mContainer;
 	private static int roll;
 	private static JLabel rollView;
+	private JButton rollButton;
 	private static JFrame gameFrame;
 	
 	public Parchessi(){
+		//Initilize Roll Button
+		rollButton = new JButton("Roll Dice");
+		rollButton.addActionListener(new ActionListener() {
+		      public void actionPerformed(ActionEvent evt) {
+	    	  Parchessi.roll();
+	        }
+	      });
 		
 		//Set and Initialize Number of Players
 		numPlayers = 4;
@@ -26,6 +37,8 @@ class Parchessi extends JFrame{
 		//Initialize Board and Menu
 		b = new Board(numPlayers);
 		m = new Menu();
+		
+		m.add(rollButton);
 		
 		//Game Panel Stuff
 		mContainer = new JPanel();
