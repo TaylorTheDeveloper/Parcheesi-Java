@@ -9,6 +9,7 @@ class Player extends JPanel {
 	private final int NUM_TOKENS = 4;
 	private int pid;// Player id
 	private Point p;// Player info,Starting point for pieces for each player
+	private Point entry;//Entry Point for each players token
 	private Color color;
 	private Token[] t;
 
@@ -20,18 +21,22 @@ class Player extends JPanel {
 		switch (id) {
 		case 0:// player1
 			p = new Point(20, 20);
+			entry = new Point(345,45);
 			color = Color.RED;// color = new Color(255, 185, 15);//Orange
 			break;
 		case 1:// player2
 			p = new Point(440, 20);
+			entry = new Point(  665, 365);
 			color = Color.BLUE;// color = new Color(30, 144, 255);//dodgerblue
 			break;
 		case 2:// player3
 			p = new Point(20, 460);
+			entry = new Point( 25, 365);
 			color = Color.YELLOW;// color = new Color(205, 0, 205);//Magenta
 			break;
 		case 3:// player4
 			p = new Point(440, 460);
+			entry = new Point(345, 685);
 			color = Color.GREEN;// color = new Color(165, 42, 42);//Garnet
 			break;
 		default: // This should never happen
@@ -95,6 +100,7 @@ class Player extends JPanel {
 
 		public void draw(Graphics g) {
 			// If not on board, draw within it's corresponding box
+
 			if (index == 0) {
 				switch (id) {
 				case 0:
