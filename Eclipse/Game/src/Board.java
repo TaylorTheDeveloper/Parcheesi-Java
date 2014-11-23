@@ -4,11 +4,11 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
 
+@SuppressWarnings("serial")
 public class Board extends JPanel {
 	public Color tile = new Color(0, 0, 0);
 	public Color red = new Color(255, 0, 0);

@@ -1,20 +1,13 @@
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 class Parchessi extends JFrame{
 	public static Board b;
 	public Menu m;
@@ -26,11 +19,11 @@ class Parchessi extends JFrame{
 	
 	public Parchessi(){
 		
-		//Set and Initilize Number of Players
+		//Set and Initialize Number of Players
 		numPlayers = 4;
 		//chooseNumPlayers();
 		
-		//Initilize Board and Menu
+		//Initialize Board and Menu
 		b = new Board(numPlayers);
 		m = new Menu();
 		

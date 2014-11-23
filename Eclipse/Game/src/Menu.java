@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 class Menu extends JPanel{
 	
 	/* Add's a button to the Panel */
