@@ -21,7 +21,7 @@ public class Board extends JPanel {
 	private ArrayList<Point> points;
 	private int SIZE = 40;
 	//public Token t;
-	private Player[] p;
+	public static Player[] p;
 
 	public Board(int numPlayers) {
 		//t = new Token();
@@ -30,7 +30,25 @@ public class Board extends JPanel {
 			p[i] = new Player(i);
 		}
 	}
-
+	
+	/*
+	 * tv = turnValue
+	 * Moves Player based on tv index.
+	 */
+	public static void movePlayer(int tv, int r){
+		int tok = p[tv].chooseToken();
+		int i  = p[tv].t[tok].getPositionIndex();
+		p[tv].t[tok].setPositionIndex(i+r);
+		p[tv].t[tok].setX(50);
+		p[tv].t[tok].setY(50);
+		
+	}
+	
+	public void foo(){
+		
+	}
+	
+	
 	/*
 	 * Returns List of Points, for the Game Logic Array.
 	 */
@@ -250,5 +268,9 @@ public class Board extends JPanel {
 		}
 
 		paintPlayerOverlay(g);
+		
+		g.drawRect(15, 355, 10, 10);
+
+		printPoints();
 	}
 }

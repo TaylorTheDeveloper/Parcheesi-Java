@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -13,10 +14,10 @@ class Player extends JPanel {
 	private Color color;
 	public Token[] t;
 
-	// Constructor Expects player one to logicall be '0', so we increment it to
+	// Constructor Expects player one to logically be '0', so we increment it to
 	// '1'
 	public Player(int id) {
-		// Initilize Player Details
+		// Initialize Player Details
 		pid = id + 1;
 		switch (id) {
 		case 0:// player1
@@ -27,7 +28,7 @@ class Player extends JPanel {
 		case 1:// player2
 			p = new Point(440, 20);
 			entry = new Point(  665, 365);
-			color = Color.BLUE;// color = new Color(30, 144, 255);//dodgerblue
+			color = Color.BLUE;// color = new Color(30, 144, 255);//dodger blue
 			break;
 		case 2:// player3
 			p = new Point(20, 460);
@@ -48,6 +49,33 @@ class Player extends JPanel {
 		for (int i = 0; i < NUM_TOKENS; i++) {
 			t[i] = new Token(i, p.x, p.y, getColor());
 		}
+	}
+	/*
+	 * Choose Player's Token to move with Error Bounds Checking
+	 */
+	public int chooseToken() {
+		int tok = -1;
+		while (tok > 3 || tok < 0) {
+			String[] options = { "0","1", "2", "3" };
+			String x = (String) JOptionPane.showInputDialog(null,
+					"Which Token Would You Like To Move? (WTWYLTM?)", "Parcheesi",
+					JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+			tok = Integer.parseInt(x);
+		}
+		return tok;	
+	}
+	/*
+	 * Select Token To Move
+	 */
+	public Token selectToken(int i){
+		switch(i){
+		case 0: return t[0];
+		case 1: return t[1];
+		case 2: return t[2];
+		case 3: return t[3];
+		}
+		return t[0];//Default, this should never happen
 	}
 
 	public void setPoint(int x, int y) {
@@ -155,6 +183,7 @@ class Player extends JPanel {
 		}
 
 		public void setPositionIndex(int x) {
+			System.out.println("Set index plus " + x);
 			index = x;
 		}
 

@@ -30,12 +30,15 @@ class Parchessi extends JFrame {
 		displayValue=turnValue+1;
 		numPlayers = 4;
 		// chooseNumPlayers();
+		
 
 		// Initialize Roll Button
 		rollButton = new JButton("Roll Dice");
 		rollButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				Parchessi.roll();
+				Board.movePlayer(turnValue,roll);
+				repaint();
 				rollButton.setEnabled(false);
 				nextTurn.setEnabled(true);
 			}
@@ -89,6 +92,7 @@ class Parchessi extends JFrame {
 		// if(p[turn]){//Check Win Condition
 		//
 		// }
+		
 		displayValue = turnValue+1;
 		rollView.setText("Turn: Player " + displayValue + ";    Roll: ");
 		System.out.println("Next turn: " + turnValue + "   Display: " + displayValue);
@@ -100,7 +104,7 @@ class Parchessi extends JFrame {
 	public static int roll() {
 		int display = turnValue + 1;
 		Random diceRoller = new Random();
-		int roll = diceRoller.nextInt(6) + 1;// Roll first Dice
+		roll = diceRoller.nextInt(6) + 1;// Roll first Dice
 		int roll2 = diceRoller.nextInt(6) + 1;// Roll second Dice
 
 		if (roll == roll2) {
@@ -127,6 +131,7 @@ class Parchessi extends JFrame {
 			numPlayers = Integer.parseInt(x);
 		}
 	}
+	
 
 	/*
 	 * Resets the Game
