@@ -60,7 +60,7 @@ public class Board extends JPanel {
 		return SIZE;
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	public void update(){
 		repaint();
 	}
 	

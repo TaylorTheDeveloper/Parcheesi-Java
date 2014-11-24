@@ -11,7 +11,7 @@ class Player extends JPanel {
 	private Point p;// Player info,Starting point for pieces for each player
 	private Point entry;//Entry Point for each players token
 	private Color color;
-	private Token[] t;
+	public Token[] t;
 
 	// Constructor Expects player one to logicall be '0', so we increment it to
 	// '1'
@@ -64,6 +64,16 @@ class Player extends JPanel {
 		// Update Tokens
 		for (int i = 0; i < NUM_TOKENS; i++) {
 			t[i].draw(g);
+		}
+	}
+	
+	public boolean hasWon(){
+		if(t[0].isSafe()&&t[1].isSafe()&&t[2].isSafe()&&t[3].isSafe()){
+			System.out.println("A Player Has Won");
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 
