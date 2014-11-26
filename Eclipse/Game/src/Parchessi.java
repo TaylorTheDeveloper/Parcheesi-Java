@@ -72,7 +72,8 @@ class Parchessi extends JFrame {
 		getContentPane().setBackground(new Color(250, 250, 250));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(-900, 200, 725, 850);
+		//setBounds(-900, 200, 725, 850);//Second Monitor Debugging
+		setBounds(20, 20, 725, 850);//Single Monitor
 		setVisible(true);
 	}
 

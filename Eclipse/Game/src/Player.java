@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,32 +16,54 @@ class Player extends JPanel {
 	private Point p;// Player info,Starting point for pieces for each player
 	private Point entry;//Entry Point for each players token
 	private Color color;
+	private int offset;
 	public Token[] t;
+	//Point Data for Special Traversals
+	public final ArrayList<Point> specialPointData;
+	
 
 	// Constructor Expects player one to logically be '0', so we increment it to
 	// '1'
 	public Player(int id) {
+		specialPointData = new ArrayList<Point>();
 		// Initialize Player Details
 		pid = id + 1;
 		switch (id) {
 		case 0:// player1
 			p = new Point(20, 20);
 			entry = new Point(345,45);
+			offset = 15;//Perfect
 			color = Color.RED;// color = new Color(255, 185, 15);//Orange
+			//Special Point Data for Traversals
+			specialPointData.add(new Point(335, 35));
+			specialPointData.add(new Point(335, 75));
+			specialPointData.add(new Point(335, 115));
+			
+			specialPointData.add(new Point(335, 155));
+			specialPointData.add(new Point(335, 195));
+			specialPointData.add(new Point(335, 235));
+			
+			specialPointData.add(new Point(335, 275));
+			specialPointData.add(new Point(335, 315));
+			specialPointData.add(new Point(335, 355));
+			
 			break;
 		case 1:// player2
 			p = new Point(440, 20);
 			entry = new Point(  665, 365);
+			offset = 31;
 			color = Color.BLUE;// color = new Color(30, 144, 255);//dodger blue
 			break;
 		case 2:// player3
 			p = new Point(20, 460);
 			entry = new Point( 25, 365);
+			offset = -1;
 			color = Color.YELLOW;// color = new Color(205, 0, 205);//Magenta
 			break;
 		case 3:// player4
 			p = new Point(440, 460);
 			entry = new Point(345, 685);
+			offset = 47;
 			color = Color.GREEN;// color = new Color(165, 42, 42);//Garnet
 			break;
 		default: // This should never happen
@@ -52,6 +75,10 @@ class Player extends JPanel {
 		for (int i = 0; i < NUM_TOKENS; i++) {
 			t[i] = new Token(i, p.x, p.y, getColor());
 		}
+	}
+	
+	public int getOffset(){
+		return offset;
 	}
 	/*
 	 * Choose Player's Token to move with Error Bounds Checking
@@ -119,12 +146,14 @@ class Player extends JPanel {
 		private int tokenSize;
 		private int id;
 		private int index;
+		private boolean lastEight;
 		private Point pos;
 		private Color c;
 		private final int SAFE = 100;// Index for all Safe Tokens!
 
 		// This constructor takes the players individual Corner Parameteres
 		public Token(int i, int x, int y, Color col) {
+			lastEight = false;
 			tokenSize = 20;
 			id = i;
 			index = 0;
@@ -164,6 +193,28 @@ class Player extends JPanel {
 				drawToken(g, getX(), getY());
 			}
 
+		}
+		
+		/*
+		 * If the player has traversed the entire board, then we want to go down the players safe zone for a win!
+		 * Returns -1 if false
+		 * Returns any other positive value to represent how many spaces the user can traverse following the turn
+		 */
+		public int checkTraversal(){
+			if(getPositionIndex() >= 63){
+				lastEight = true;
+				return getPositionIndex()%63;
+			}
+			else{
+				return -1;
+			}			
+		}
+		
+		public boolean getSafeZone(){
+			return lastEight;			
+		}
+		public void setSafeZone(boolean b){
+			lastEight = b;			
 		}
 		
 		public boolean isSafe(){
@@ -217,136 +268,7 @@ class Player extends JPanel {
 		}
 		
 
-		//Point Data for Traversals
-		public final Point[] pointData = {
-				new Point(15,315), 
-				new Point(55,315), 
-				new Point(95,315), 
-				new Point(135,315), 
-				new Point(175,315), 
-				new Point(215,315), 
-				new Point(255,315), 
-				new Point(295,315), 
-				new Point(295,275), 
-				new Point(295,235), 
-				new Point(295,195), 
-				new Point(295,155), 
-				new Point(295,115), 
-				new Point(295,75), 
-				new Point(295,35), 
-				new Point(335,35), 
-				new Point(375,35), 
-				new Point(375,75), 
-				new Point(375,115), 
-				new Point(375,155), 
-				new Point(375,195), 
-				new Point(375,235), 
-				new Point(375,275), 
-				new Point(375,315), 
-				new Point(415,315), 
-				new Point(455,315), 
-				new Point(495,315), 
-				new Point(535,315), 
-				new Point(575,315), 
-				new Point(615,315), 
-				new Point(655,315), 
-				new Point(655,355), 
-				new Point(655,395), 
-				new Point(615,395), 
-				new Point(575,395), 
-				new Point(535,395), 
-				new Point(495,395), 
-				new Point(455,395), 
-				new Point(415,395), 
-				new Point(375,395), 
-				new Point(375,435), 
-				new Point(375,475), 
-				new Point(375,515), 
-				new Point(375,555), 
-				new Point(375,595), 
-				new Point(375,635), 
-				new Point(375,675), 
-				new Point(335,675), 
-				new Point(295,675), 
-				new Point(295,635), 
-				new Point(295,595), 
-				new Point(295,555), 
-				new Point(295,515), 
-				new Point(295,475), 
-				new Point(295,435), 
-				new Point(295,395), 
-				new Point(255,395), 
-				new Point(215,395), 
-				new Point(175,395), 
-				new Point(135,395), 
-				new Point(95,395), 
-				new Point(55,395), 
-				new Point(15,395), 
-				new Point(15,355), 
-				new Point(15,315), 
-				new Point(55,315), 
-				new Point(95,315), 
-				new Point(135,315), 
-				new Point(175,315), 
-				new Point(215,315), 
-				new Point(255,315), 
-				new Point(295,315), 
-				new Point(295,275), 
-				new Point(295,235), 
-				new Point(295,195), 
-				new Point(295,155), 
-				new Point(295,115), 
-				new Point(295,75), 
-				new Point(295,35), 
-				new Point(335,35), 
-				new Point(375,35), 
-				new Point(375,75), 
-				new Point(375,115), 
-				new Point(375,155), 
-				new Point(375,195), 
-				new Point(375,235), 
-				new Point(375,275), 
-				new Point(375,315), 
-				new Point(415,315), 
-				new Point(455,315), 
-				new Point(495,315), 
-				new Point(535,315), 
-				new Point(575,315), 
-				new Point(615,315), 
-				new Point(655,315), 
-				new Point(655,355), 
-				new Point(655,395), 
-				new Point(615,395), 
-				new Point(575,395), 
-				new Point(535,395), 
-				new Point(495,395), 
-				new Point(455,395), 
-				new Point(415,395), 
-				new Point(375,395), 
-				new Point(375,435), 
-				new Point(375,475), 
-				new Point(375,515), 
-				new Point(375,555), 
-				new Point(375,595), 
-				new Point(375,635), 
-				new Point(375,675), 
-				new Point(335,675), 
-				new Point(295,675), 
-				new Point(295,635), 
-				new Point(295,595), 
-				new Point(295,555), 
-				new Point(295,515), 
-				new Point(295,475), 
-				new Point(295,435), 
-				new Point(295,395), 
-				new Point(255,395), 
-				new Point(215,395), 
-				new Point(175,395), 
-				new Point(135,395), 
-				new Point(95,395), 
-				new Point(55,395), 
-				new Point(15,395), 
-				new Point(15,355), };
+
 
 	}
 }
