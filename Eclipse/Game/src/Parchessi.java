@@ -28,8 +28,8 @@ class Parchessi extends JFrame {
 		// Set and Initialize Number of Players
 		turnValue = 0;
 		displayValue=turnValue+1;
-		numPlayers = 4;
-		// chooseNumPlayers();
+		//numPlayers = 4;
+		chooseNumPlayers();
 		
 
 		// Initialize Roll Button

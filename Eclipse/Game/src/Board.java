@@ -10,9 +10,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel {
-	/*
-	 * POINT DATA DECLARED AT BOTTOM OF FILE!!!
-	 */
+
 	private Color tile = new Color(0, 0, 0);
 	private Color red = new Color(255, 0, 0);
 	private Color blue = new Color(0, 0, 255);
@@ -44,8 +42,8 @@ public class Board extends JPanel {
 		p[tv].t[tok].setPositionIndex(i+r);
 		int z = p[tv].t[tok].getPositionIndex();
 		
-		p[tv].t[tok].setX(points.get(z).x);
-		p[tv].t[tok].setY(points.get(z).y);
+		p[tv].t[tok].setX(points.get(z).x+10);
+		p[tv].t[tok].setY(points.get(z).y+10);
 		System.out.println("pt:" + points.get(z).x + " "+ points.get(z).y);
 		
 	}
@@ -255,135 +253,5 @@ public class Board extends JPanel {
 		
 		//printPoints();
 	}
-	//Point Data for Traversals
-	private final static Point[] pointData = {
-			new Point(15,315), 
-			new Point(55,315), 
-			new Point(95,315), 
-			new Point(135,315), 
-			new Point(175,315), 
-			new Point(215,315), 
-			new Point(255,315), 
-			new Point(295,315), 
-			new Point(295,275), 
-			new Point(295,235), 
-			new Point(295,195), 
-			new Point(295,155), 
-			new Point(295,115), 
-			new Point(295,75), 
-			new Point(295,35), 
-			new Point(335,35), 
-			new Point(375,35), 
-			new Point(375,75), 
-			new Point(375,115), 
-			new Point(375,155), 
-			new Point(375,195), 
-			new Point(375,235), 
-			new Point(375,275), 
-			new Point(375,315), 
-			new Point(415,315), 
-			new Point(455,315), 
-			new Point(495,315), 
-			new Point(535,315), 
-			new Point(575,315), 
-			new Point(615,315), 
-			new Point(655,315), 
-			new Point(655,355), 
-			new Point(655,395), 
-			new Point(615,395), 
-			new Point(575,395), 
-			new Point(535,395), 
-			new Point(495,395), 
-			new Point(455,395), 
-			new Point(415,395), 
-			new Point(375,395), 
-			new Point(375,435), 
-			new Point(375,475), 
-			new Point(375,515), 
-			new Point(375,555), 
-			new Point(375,595), 
-			new Point(375,635), 
-			new Point(375,675), 
-			new Point(335,675), 
-			new Point(295,675), 
-			new Point(295,635), 
-			new Point(295,595), 
-			new Point(295,555), 
-			new Point(295,515), 
-			new Point(295,475), 
-			new Point(295,435), 
-			new Point(295,395), 
-			new Point(255,395), 
-			new Point(215,395), 
-			new Point(175,395), 
-			new Point(135,395), 
-			new Point(95,395), 
-			new Point(55,395), 
-			new Point(15,395), 
-			new Point(15,355), 
-			new Point(15,315), 
-			new Point(55,315), 
-			new Point(95,315), 
-			new Point(135,315), 
-			new Point(175,315), 
-			new Point(215,315), 
-			new Point(255,315), 
-			new Point(295,315), 
-			new Point(295,275), 
-			new Point(295,235), 
-			new Point(295,195), 
-			new Point(295,155), 
-			new Point(295,115), 
-			new Point(295,75), 
-			new Point(295,35), 
-			new Point(335,35), 
-			new Point(375,35), 
-			new Point(375,75), 
-			new Point(375,115), 
-			new Point(375,155), 
-			new Point(375,195), 
-			new Point(375,235), 
-			new Point(375,275), 
-			new Point(375,315), 
-			new Point(415,315), 
-			new Point(455,315), 
-			new Point(495,315), 
-			new Point(535,315), 
-			new Point(575,315), 
-			new Point(615,315), 
-			new Point(655,315), 
-			new Point(655,355), 
-			new Point(655,395), 
-			new Point(615,395), 
-			new Point(575,395), 
-			new Point(535,395), 
-			new Point(495,395), 
-			new Point(455,395), 
-			new Point(415,395), 
-			new Point(375,395), 
-			new Point(375,435), 
-			new Point(375,475), 
-			new Point(375,515), 
-			new Point(375,555), 
-			new Point(375,595), 
-			new Point(375,635), 
-			new Point(375,675), 
-			new Point(335,675), 
-			new Point(295,675), 
-			new Point(295,635), 
-			new Point(295,595), 
-			new Point(295,555), 
-			new Point(295,515), 
-			new Point(295,475), 
-			new Point(295,435), 
-			new Point(295,395), 
-			new Point(255,395), 
-			new Point(215,395), 
-			new Point(175,395), 
-			new Point(135,395), 
-			new Point(95,395), 
-			new Point(55,395), 
-			new Point(15,395), 
-			new Point(15,355), };
 
 }
