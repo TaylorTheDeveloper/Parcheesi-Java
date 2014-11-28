@@ -76,7 +76,9 @@ class Player extends JPanel {
 			t[i] = new Token(i, p.x, p.y, getColor());
 		}
 	}
-	
+	public int getPID(){
+		return pid;		
+	}
 	public int getOffset(){
 		return offset;
 	}
@@ -85,6 +87,7 @@ class Player extends JPanel {
 	 */
 	public int chooseToken() {
 		int tok = -1;
+		//return 0;
 		while (tok > 3 || tok < 0) {
 			String[] options = { "0","1", "2", "3" };
 			String x = (String) JOptionPane.showInputDialog(null,
@@ -138,7 +141,7 @@ class Player extends JPanel {
 	
 	public boolean hasWon(){
 		if(t[0].isSafe()&&t[1].isSafe()&&t[2].isSafe()&&t[3].isSafe()){
-			System.out.println("A Player Has Won");
+			System.out.println("Player "+pid+" Has Won");
 			return true;
 		}
 		else{

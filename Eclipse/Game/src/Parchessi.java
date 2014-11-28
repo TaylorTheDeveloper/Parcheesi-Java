@@ -28,8 +28,8 @@ class Parchessi extends JFrame {
 		// Set and Initialize Number of Players
 		turnValue = 0;
 		displayValue=turnValue+1;
-		//numPlayers = 4;
-		chooseNumPlayers();
+		numPlayers = 1;
+		//chooseNumPlayers();
 		
 
 		// Initialize Roll Button
@@ -51,6 +51,10 @@ class Parchessi extends JFrame {
 				rollButton.setEnabled(true);
 				nextTurn.setEnabled(false);				
 				getNextTurn();
+				int res=Board.checkWin();
+				if(res>-1){
+					gameHasBeenWon(res);
+				}
 			}
 		});
 
@@ -75,6 +79,22 @@ class Parchessi extends JFrame {
 		//setBounds(-900, 200, 725, 850);//Second Monitor Debugging
 		setBounds(20, 20, 725, 850);//Single Monitor
 		setVisible(true);
+	}
+	
+	public static void gameHasBeenWon(int id){
+		JOptionPane.showMessageDialog(null, "Congrats Player " + id+1 + "!!! You've just won Parcheesi!");
+		//JOptionPane.showMessageDialog(null, "");
+		String[] options = { "Yes!", "No!" };
+		String x = (String) JOptionPane.showInputDialog(null, 
+								"Are You Sure?","Parcheesi",
+								JOptionPane.QUESTION_MESSAGE, 
+								null, options, options[0]); 	        
+		if(x=="Yes!"){
+			reset();
+		}
+		else{
+    		System.exit(0);
+		}
 	}
 
 	public static Board getBoard() {

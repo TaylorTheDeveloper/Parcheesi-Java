@@ -21,17 +21,32 @@ public class Board extends JPanel {
 	private Color base = new Color(0, 179, 21);
 	private static ArrayList<Point> points;
 	private int SIZE = 40;
+	private static int numGamePlayers; 
 	//public Token t;
 	public static Player[] p;
+	
 
 	public Board(int numPlayers) {
+		numGamePlayers = numPlayers;
 		//t = new Token();
 		p = new Player[numPlayers];
 		for(int i = 0; i< numPlayers;i++ ){
 			p[i] = new Player(i);
 		}
 	}
-	
+	/*
+	 * Check For Winner!
+	 *  Return -1 for no winner, else return player index. Should only ever return -1,0,1,2,3. Nothing else.
+	 */
+	public static int checkWin(){
+		for(int i = 0; i < numGamePlayers; i++){
+			if(p[i].hasWon()){
+				return p[i].getPID();
+			}
+			
+		}
+		return -1;
+	}
 	/*
 	 * tv = turnValue
 	 * Moves Player based on tv index.
