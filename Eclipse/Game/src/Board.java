@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -64,7 +63,7 @@ public class Board extends JPanel {
 			int moves = p[tv].t[tok].checkTraversal()-1;
 			if(moves > p[tv].specialPointData.size()){
 				moves = p[tv].specialPointData.size();
-				System.out.println("ERROR 0001: Tried to move out of special range");
+				System.out.println("Board: ERROR 0001: Tried to move out of special range");
 			}
 			p[tv].t[tok].setX(p[tv].specialPointData.get(moves).x+10);
 			p[tv].t[tok].setY(p[tv].specialPointData.get(moves).y+10);			
@@ -74,7 +73,7 @@ public class Board extends JPanel {
 		if(p[tv].t[tok].getSafeZone()){
 			if(z > p[tv].specialPointData.size()){
 				z = p[tv].specialPointData.size()-1;
-				System.out.println("ERROR 0002: Tried to move out of special range");
+				System.out.println("Board: ERROR 0002: Tried to move out of special range");
 			}
 			p[tv].t[tok].setX(p[tv].specialPointData.get(z).x+10);
 			p[tv].t[tok].setY(p[tv].specialPointData.get(z).y+10);	
@@ -296,8 +295,6 @@ public class Board extends JPanel {
 		}
 
 		paintPlayerOverlay(g);
-		
-		//printPoints();
 	}
 
 }

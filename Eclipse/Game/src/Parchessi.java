@@ -82,14 +82,14 @@ class Parchessi extends JFrame {
 	}
 	
 	public static void gameHasBeenWon(int id){
-		JOptionPane.showMessageDialog(null, "Congrats Player " + id+1 + "!!! You've just won Parcheesi!");
+		JOptionPane.showMessageDialog(null, "Congrats Player " + id + "!!! You've just won Parcheesi!");
 		//JOptionPane.showMessageDialog(null, "");
-		String[] options = { "Yes!", "No!" };
+		String[] options = { "Play Again!", "I quit!" };
 		String x = (String) JOptionPane.showInputDialog(null, 
-								"Are You Sure?","Parcheesi",
+								"Would you like to play a new game or quit?","Parcheesi",
 								JOptionPane.QUESTION_MESSAGE, 
 								null, options, options[0]); 	        
-		if(x=="Yes!"){
+		if(x=="Play Again!"){
 			reset();
 		}
 		else{

@@ -14,7 +14,6 @@ class Player extends JPanel {
 	private final int NUM_TOKENS = 4;
 	private int pid;// Player id
 	private Point p;// Player info,Starting point for pieces for each player
-	private Point entry;//Entry Point for each players token
 	private Color color;
 	private int offset;
 	public Token[] t;
@@ -31,7 +30,6 @@ class Player extends JPanel {
 		switch (id) {
 		case 0:// player1
 			p = new Point(20, 20);
-			entry = new Point(345,45);
 			offset = 15;//Perfect
 			color = Color.RED;// color = new Color(255, 185, 15);//Orange
 			//Special Point Data for Traversals
@@ -50,25 +48,22 @@ class Player extends JPanel {
 			break;
 		case 1:// player2
 			p = new Point(440, 20);
-			entry = new Point(  665, 365);
 			offset = 31;
-			color = Color.BLUE;// color = new Color(30, 144, 255);//dodger blue
+			color = Color.BLUE;
 			break;
 		case 2:// player3
 			p = new Point(20, 460);
-			entry = new Point( 25, 365);
 			offset = -1;
-			color = Color.YELLOW;// color = new Color(205, 0, 205);//Magenta
+			color = Color.YELLOW;
 			break;
 		case 3:// player4
 			p = new Point(440, 460);
-			entry = new Point(345, 685);
 			offset = 47;
-			color = Color.GREEN;// color = new Color(165, 42, 42);//Garnet
+			color = Color.GREEN;
 			break;
 		default: // This should never happen
 			p = new Point(20, 20);
-			color = Color.RED;// color = new Color(255, 185, 15);
+			color = Color.RED;
 		}
 
 		t = new Token[NUM_TOKENS];
@@ -141,7 +136,7 @@ class Player extends JPanel {
 	
 	public boolean hasWon(){
 		if(t[0].isSafe()&&t[1].isSafe()&&t[2].isSafe()&&t[3].isSafe()){
-			System.out.println("Player "+pid+" Has Won");
+			System.out.println("Player: Player "+pid+" Has Won");
 			return true;
 		}
 		else{
@@ -161,7 +156,8 @@ class Player extends JPanel {
 		private boolean lastEight;
 		private Point pos;
 		private Color c;
-		private final int SAFE = 100;// Index for all Safe Tokens!
+		//Do not change SAFE or else
+		private final int SAFE = 63;// Index for all Safe Tokens!
 
 		// This constructor takes the players individual Corner Parameteres
 		public Token(int i, int x, int y, Color col) {
@@ -213,9 +209,10 @@ class Player extends JPanel {
 		 * Returns any other positive value to represent how many spaces the user can traverse following the turn
 		 */
 		public int checkTraversal(){
-			if(getPositionIndex() >= 63){
+			if(getPositionIndex() >= SAFE){
+				System.out.println("Player:Token:checkTraversal(): Token " + id + " is on last eight");
 				lastEight = true;
-				return getPositionIndex()%63;
+				return getPositionIndex()%SAFE;
 			}
 			else{
 				return -1;
@@ -230,7 +227,8 @@ class Player extends JPanel {
 		}
 		
 		public boolean isSafe(){
-			if(index == SAFE){
+			if(index >= SAFE){
+				System.out.println("Player:Token:isSafe(): Token " + id + " is safe");
 				return true;
 			}
 			else{
