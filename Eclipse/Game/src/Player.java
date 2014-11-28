@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 /*
  * POINT DATA DECLARED AT BOTTOM OF FILE!!! In Token Class
  */
@@ -17,9 +18,7 @@ class Player extends JPanel {
 	private Color color;
 	private int offset;
 	public Token[] t;
-	//Point Data for Special Traversals
-	public final ArrayList<Point> specialPointData;
-	
+	public final ArrayList<Point> specialPointData;// Point Data for Special Traversals
 
 	// Constructor Expects player one to logically be '0', so we increment it to
 	// '1'
@@ -30,21 +29,21 @@ class Player extends JPanel {
 		switch (id) {
 		case 0:// player1
 			p = new Point(20, 20);
-			offset = 15;//Perfect
+			offset = 15;// Perfect
 			color = Color.RED;// color = new Color(255, 185, 15);//Orange
-			//Special Point Data for Traversals
+			// Special Point Data for Traversals
 			specialPointData.add(new Point(335, 35));
 			specialPointData.add(new Point(335, 75));
 			specialPointData.add(new Point(335, 115));
-			
+
 			specialPointData.add(new Point(335, 155));
 			specialPointData.add(new Point(335, 195));
 			specialPointData.add(new Point(335, 235));
-			
+
 			specialPointData.add(new Point(335, 275));
 			specialPointData.add(new Point(335, 315));
 			specialPointData.add(new Point(335, 355));
-			
+
 			break;
 		case 1:// player2
 			p = new Point(440, 20);
@@ -71,58 +70,62 @@ class Player extends JPanel {
 			t[i] = new Token(i, p.x, p.y, getColor());
 		}
 	}
-	public int getPID(){
-		return pid;		
+
+	public int getPID() {
+		return pid;
 	}
-	public int getOffset(){
+
+	public int getOffset() {
 		return offset;
 	}
+
 	/*
 	 * Choose Player's Token to move with Error Bounds Checking
 	 */
 	public int chooseToken() {
 		int tok = -1;
-		//return 0;
+		// return 0;
 		while (tok > 3 || tok < 0) {
-			String[] options = { "0","1", "2", "3" };
+			String[] options = { "0", "1", "2", "3" };
 			String x = (String) JOptionPane.showInputDialog(null,
-					"Which Token Would You Like To Move? (WTWYLTM?)", 
-					"Parcheesi",
-					JOptionPane.QUESTION_MESSAGE, 
-					null, options
-					, autoSelectFreeToken());
+					"Which Token Would You Like To Move? (WTWYLTM?)",
+					"Parcheesi", JOptionPane.QUESTION_MESSAGE, null, options,
+					autoSelectFreeToken());
 
-			if(x==null){
+			if (x == null) {
 				tok = autoSelectFreeToken();
+			} else {
+				tok = Integer.parseInt(x);
 			}
-			else{
-				tok = Integer.parseInt(x);				
-			}
-			//tok = Integer.parseInt(x);
+			// tok = Integer.parseInt(x);
 		}
-		return tok;	
+		return tok;
 	}
+
 	/*
-	 * Select Token To Move, returns an integer representing a valid usable token. -1 otherwise
+	 * Select Token To Move, returns an integer representing a valid usable
+	 * token. -1 otherwise
 	 */
-	public int autoSelectFreeToken(){
+	public int autoSelectFreeToken() {
 		int tok = -1;
-		for(int k = 0; k < NUM_TOKENS;k++){
-			if(!t[k].isSafe()){
-				//Grab the first not safe token!
+		for (int k = 0; k < NUM_TOKENS; k++) {
+			if (!t[k].isSafe()) {
+				// Grab the first not safe token!
 				tok = k;
-			}			
-		}		
-		return tok;		
-		
+			}
+		}
+		return tok;
+
 	}
 
 	public void setPoint(int x, int y) {
 		p = new Point(x, y);
 	}
 
+	/*
+	 * Updates the Player info and tokens on board
+	 */
 	public void update(Graphics g) {
-		// Update Player Info
 		g.setColor(color);
 		g.fillRect(p.x, p.y, 150, 150);
 		g.setColor(Color.BLACK);
@@ -133,33 +136,43 @@ class Player extends JPanel {
 			t[i].draw(g);
 		}
 	}
-	
-	public boolean hasWon(){
-		if(t[0].isSafe()&&t[1].isSafe()&&t[2].isSafe()&&t[3].isSafe()){
-			System.out.println("Player: Player "+pid+" Has Won");
+
+	/*
+	 * Checks if Player has won. Returns a boolean representation of the
+	 * condition
+	 */
+	public boolean hasWon() {
+		if (t[0].isSafe() && t[1].isSafe() && t[2].isSafe() && t[3].isSafe()) {
+			System.out.println("Player: Player " + pid + " Has Won");
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
 
+	/*
+	 * gets Player Color
+	 */
 	public Color getColor() {
 		return color;
 	}
 
+	/*
+	 * Nested Token Object Class, each player has 4 tokens
+	 */
 	class Token {
-		// Index Represents where a peice is on the board
+		// Index Represents where a piece is on the board
+		// Do not change SAFE or else
+		private final int SAFE = 63;// Index for all Safe Tokens!
+		private boolean lastEight;
 		private int tokenSize;
 		private int id;
 		private int index;
-		private boolean lastEight;
 		private Point pos;
 		private Color c;
-		//Do not change SAFE or else
-		private final int SAFE = 63;// Index for all Safe Tokens!
 
-		// This constructor takes the players individual Corner Parameteres
+		// This constructor takes the players individual Corner Parameters so it
+		// knows where each players nest is
 		public Token(int i, int x, int y, Color col) {
 			lastEight = false;
 			tokenSize = 20;
@@ -179,8 +192,7 @@ class Player extends JPanel {
 		}
 
 		public void draw(Graphics g) {
-			// If not on board, draw within it's corresponding box
-
+			// If not on board(index 0), draw within it's corresponding box
 			if (index == 0) {
 				switch (id) {
 				case 0:
@@ -202,52 +214,75 @@ class Player extends JPanel {
 			}
 
 		}
-		
+
 		/*
-		 * If the player has traversed the entire board, then we want to go down the players safe zone for a win!
-		 * Returns -1 if false
-		 * Returns any other positive value to represent how many spaces the user can traverse following the turn
+		 * If the player has traversed the entire board, then we want to go down
+		 * the players safe zone for a win! Returns -1 if false Returns any
+		 * other positive value to represent how many spaces the user can
+		 * traverse following the turn
 		 */
-		public int checkTraversal(){
-			if(getPositionIndex() >= SAFE){
-				System.out.println("Player:Token:checkTraversal(): Token " + id + " is on last eight");
+		public int checkTraversal() {
+			if (getPositionIndex() >= SAFE) {
+				System.out.println("Player:Token:checkTraversal(): Token " + id
+						+ " is on last eight");
 				lastEight = true;
-				return getPositionIndex()%SAFE;
-			}
-			else{
+				return getPositionIndex() % SAFE;
+			} else {
 				return -1;
-			}			
-		}
-		
-		public boolean getSafeZone(){
-			return lastEight;			
-		}
-		public void setSafeZone(boolean b){
-			lastEight = b;			
-		}
-		
-		public boolean isSafe(){
-			if(index >= SAFE){
-				System.out.println("Player:Token:isSafe(): Token " + id + " is safe");
-				return true;
 			}
-			else{
+		}
+
+		/*
+		 * gets the safe zone condition
+		 */
+		public boolean getSafeZone() {
+			return lastEight;
+		}
+
+		/*
+		 * sets the safe zone condition
+		 */
+		public void setSafeZone(boolean b) {
+			lastEight = b;
+		}
+
+		/*
+		 * Checks to see if the token is Safe, or not
+		 */
+		public boolean isSafe() {
+			if (index >= SAFE) {
+				System.out.println("Player:Token:isSafe(): Token " + id
+						+ " is safe");
+				return true;
+			} else {
 				return false;
 			}
 		}
 
+		/*
+		 * Returns Token ID
+		 */
 		public int getID() {
 			return id;
 		}
 
+		/*
+		 * Sets Token ID
+		 */
 		public void setID(int i) {
 			id = i;
 		}
 
+		/*
+		 * Gets Token Traversal Index
+		 */
 		public int getPositionIndex() {
 			return index;
 		}
 
+		/*
+		 * Sets Token Traversal Index
+		 */
 		public void setPositionIndex(int x) {
 			System.out.println("Set index plus " + x);
 			index = x;
@@ -276,9 +311,6 @@ class Player extends JPanel {
 		public int getHeight() {
 			return tokenSize;
 		}
-		
-
-
 
 	}
 }

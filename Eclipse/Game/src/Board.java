@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-
-
 @SuppressWarnings("serial")
 public class Board extends JPanel {
-
+	private static ArrayList<Point> points;
+	private static int numGamePlayers;
+	private static Player[] p;
 	private Color tile = new Color(0, 0, 0);
 	private Color red = new Color(255, 0, 0);
 	private Color blue = new Color(0, 0, 255);
@@ -18,81 +18,89 @@ public class Board extends JPanel {
 	private Color safeBorder = new Color(0, 255, 0);
 	private Color safeFill = new Color(0, 150, 150);
 	private Color base = new Color(0, 179, 21);
-	private static ArrayList<Point> points;
 	private int SIZE = 40;
-	private static int numGamePlayers; 
-	//public Token t;
-	public static Player[] p;
-	
 
+	/*
+	 * Board Constructor Constructs a custom board for numPlayers to play
+	 */
 	public Board(int numPlayers) {
 		numGamePlayers = numPlayers;
-		//t = new Token();
+
 		p = new Player[numPlayers];
-		for(int i = 0; i< numPlayers;i++ ){
+		for (int i = 0; i < numPlayers; i++) {
 			p[i] = new Player(i);
 		}
 	}
+
 	/*
-	 * Check For Winner!
-	 *  Return -1 for no winner, else return player index. Should only ever return -1,0,1,2,3. Nothing else.
+	 * Check For Winner! Return -1 for no winner, else return player index.
+	 * Should only ever return -1,0,1,2,3. Nothing else.
 	 */
-	public static int checkWin(){
-		for(int i = 0; i < numGamePlayers; i++){
-			if(p[i].hasWon()){
+	public static int checkWin() {
+		for (int i = 0; i < numGamePlayers; i++) {
+			if (p[i].hasWon()) {
 				return p[i].getPID();
 			}
-			
+
 		}
 		return -1;
 	}
-	/*
-	 * tv = turnValue
-	 * Moves Player based on tv index.
-	 */
-	public static void movePlayer(int tv, int r){
-		int tok = p[tv].chooseToken();//Select Token
-		int i  = p[tv].t[tok].getPositionIndex();//Get the Current Index
-		
-		p[tv].t[tok].setPositionIndex(i+r);//Set the current Index + the roll value
-		int z = p[tv].t[tok].getPositionIndex() + p[tv].getOffset();// Get the current index (i+r) for the point data
 
-		
-		//Check if we've made a complete traversal. This condition should only happen once
-		if(p[tv].t[tok].checkTraversal() > -1){
-			int moves = p[tv].t[tok].checkTraversal()-1;
-			if(moves > p[tv].specialPointData.size()){
+	/*
+	 * MovePlayer moves and sets the players Token locations on the board tv =
+	 * turnValue Moves Player based on tv index.
+	 */
+	public static void movePlayer(int tv, int r) {
+		int tok = p[tv].chooseToken();// Select Token
+		int i = p[tv].t[tok].getPositionIndex();// Get the Current Index
+
+		p[tv].t[tok].setPositionIndex(i + r);// Set the current Index + the roll
+												// value
+		int z = p[tv].t[tok].getPositionIndex() + p[tv].getOffset();// Get the
+																	// current
+																	// index
+																	// (i+r) for
+																	// the point
+																	// data
+
+		// Check if we've made a complete traversal. This condition should only
+		// happen once
+		if (p[tv].t[tok].checkTraversal() > -1) {
+			int moves = p[tv].t[tok].checkTraversal() - 1;
+			if (moves > p[tv].specialPointData.size()) {
 				moves = p[tv].specialPointData.size();
-				System.out.println("Board: ERROR 0001: Tried to move out of special range");
+				System.out
+						.println("Board: ERROR 0001: Tried to move out of special range");
 			}
-			p[tv].t[tok].setX(p[tv].specialPointData.get(moves).x+10);
-			p[tv].t[tok].setY(p[tv].specialPointData.get(moves).y+10);			
-			p[tv].t[tok].setSafeZone(true);			
+			p[tv].t[tok].setX(p[tv].specialPointData.get(moves).x + 10);
+			p[tv].t[tok].setY(p[tv].specialPointData.get(moves).y + 10);
+			p[tv].t[tok].setSafeZone(true);
 		}
-		//If we have made a complete traversal, go down the special lane
-		if(p[tv].t[tok].getSafeZone()){
-			if(z > p[tv].specialPointData.size()){
-				z = p[tv].specialPointData.size()-1;
-				System.out.println("Board: ERROR 0002: Tried to move out of special range");
+		// If we have made a complete traversal, go down the special lane
+		if (p[tv].t[tok].getSafeZone()) {
+			if (z > p[tv].specialPointData.size()) {
+				z = p[tv].specialPointData.size() - 1;
+				System.out
+						.println("Board: ERROR 0002: Tried to move out of special range");
 			}
-			p[tv].t[tok].setX(p[tv].specialPointData.get(z).x+10);
-			p[tv].t[tok].setY(p[tv].specialPointData.get(z).y+10);	
-		}//Otherwise, continue moving
-		else{
-			if(z > points.size()){
-				//If the calculated index is larger than the board, the set it to itself w/ modulo
-				//Handles Offset issues
-				z = z%points.size()+1;		
+			p[tv].t[tok].setX(p[tv].specialPointData.get(z).x + 10);
+			p[tv].t[tok].setY(p[tv].specialPointData.get(z).y + 10);
+		}// Otherwise, continue moving
+		else {
+			if (z > points.size()) {
+				// If the calculated index is larger than the board, the set it
+				// to itself w/ modulo
+				// Handles Offset issues
+				z = z % points.size() + 1;
 			}
-			p[tv].t[tok].setX(points.get(z).x+10);
-			p[tv].t[tok].setY(points.get(z).y+10);
-			//System.out.println("pt:" + points.get(z).x + " "+ points.get(z).y);
+			p[tv].t[tok].setX(points.get(z).x + 10);
+			p[tv].t[tok].setY(points.get(z).y + 10);
+			// System.out.println("pt:" + points.get(z).x + " "+
+			// points.get(z).y);
 		}
-		
-		
+
 	}
-	
-	
+
 	/*
 	 * Returns List of Points, for the Game Logic Array.
 	 */
@@ -108,9 +116,12 @@ public class Board extends JPanel {
 	public int getPointLength() {
 		return points.size();
 	}
-	
-	public void printPoints(){
-		for(int i =0; i < points.size();i++){
+
+	/*
+	 * Prints out point list for debugging purposes
+	 */
+	public void printPoints() {
+		for (int i = 0; i < points.size(); i++) {
 			System.out.println(points.get(i));
 		}
 	}
@@ -122,16 +133,19 @@ public class Board extends JPanel {
 		return SIZE;
 	}
 
-	public void update(){
-		repaint();
-	}
+	/*
+	 * Handles Painting the Players info and Tokens
+	 */
 
-	public void paintPlayerOverlay(Graphics g){
-		for(int i = 0; i< p.length;i++ ){
+	public void paintPlayerOverlay(Graphics g) {
+		for (int i = 0; i < p.length; i++) {
 			p[i].update(g);
-		}		
+		}
 	}
 
+	/*
+	 * Paints the Board, Players, and tokens
+	 */
 	public void paint(Graphics g) {
 		super.paint(g);
 		points = new ArrayList<Point>();
@@ -140,7 +154,7 @@ public class Board extends JPanel {
 		int y = 315;
 		int w = size;
 		int h = size;
-		
+
 		// Left, top
 		for (int k = 0; k < 7; k++) {
 			g.setColor(tile);
@@ -162,7 +176,7 @@ public class Board extends JPanel {
 		// Top, Center
 		g.setColor(red);// SafeZone
 		g.fillRect(x, y, w, h);
-		//System.out.println("top pt:" + x + " "+ y);
+		// System.out.println("top pt:" + x + " "+ y);
 		g.setColor(tile);// SafeZone
 		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
@@ -192,7 +206,7 @@ public class Board extends JPanel {
 		g.setColor(blue);// SafeZone
 		g.fillRect(x, y, w, h);
 		g.setColor(tile);// SafeZone
-		//System.out.println("right pt:" + x + " "+ y);
+		// System.out.println("right pt:" + x + " "+ y);
 		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
 		y += size;
@@ -218,7 +232,7 @@ public class Board extends JPanel {
 		// bottom, Center
 		g.setColor(green);// SafeZone
 		g.fillRect(x, y, w, h);
-		//System.out.println("bottm pt:" + x + " "+ y);
+		// System.out.println("bottm pt:" + x + " "+ y);
 		g.setColor(tile);// SafeZone
 		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
@@ -228,7 +242,7 @@ public class Board extends JPanel {
 		for (int k = 0; k < 8; k++) {
 			g.setColor(tile);
 			g.drawRect(x, y, w, h);
-			
+
 			points.add(new Point(x, y));
 			y -= size;
 		}
@@ -248,7 +262,7 @@ public class Board extends JPanel {
 		x += size;
 		g.setColor(yellow);// SafeZone
 		g.fillRect(x, y, w, h);
-		//System.out.println("left pt:" + x + " "+ y);
+		// System.out.println("left pt:" + x + " "+ y);
 		g.setColor(tile);// SafeZone
 		g.drawRect(x, y, w, h);
 		points.add(new Point(x, y));
