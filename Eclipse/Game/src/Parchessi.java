@@ -123,14 +123,21 @@ class Parchessi extends JFrame {
 	 * Choose Number of Players with Error Bounds Checking
 	 */
 	public static void chooseNumPlayers() {
-		while (numPlayers > 4 || numPlayers < 1) {
+	while (numPlayers > 4 || numPlayers < 1) {
 			String[] options = { "1", "2", "3", "4" };
 			String x = (String) JOptionPane.showInputDialog(null,
 					"How Many Players? (1-4)", "Parcheesi",
 					JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-			numPlayers = Integer.parseInt(x);
+			if(x==null){
+				numPlayers = 1;
+			}
+			else{
+				numPlayers = Integer.parseInt(x);				
+			}
 		}
+		
+		
 	}
 	
 
