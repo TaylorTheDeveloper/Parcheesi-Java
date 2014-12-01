@@ -19,6 +19,7 @@ class Parchessi extends JFrame {
 	private static JFrame gameFrame;
 	private static JLabel rollView;
 	private static Board b;
+	private static boolean rollAgain;
 	private Menu m;
 	private JPanel mContainer;
 	private JButton rollButton;
@@ -28,6 +29,8 @@ class Parchessi extends JFrame {
 	 * Parcheesi Game Constructor
 	 */
 	public Parchessi() {
+		//rollAgain is initially false
+		rollAgain = false;
 		// Set and Initialize Number of Players
 		turnValue = 0;
 		displayValue = turnValue + 1;
@@ -39,6 +42,15 @@ class Parchessi extends JFrame {
 		rollButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				Parchessi.roll();
+				while(rollAgain == true){
+					rollAgain = false;//Set to false imediatley
+					System.out.println("Parchessi:rollButton.addActionListener(): Roll again set to false");
+					System.out.println("Parchessi:rollButton.addActionListener(): Rolling Again, automatically");
+					System.out.println("Parchessi:rollButton.addActionListener(): before Roll: " + roll);
+					roll += rollAgain();
+					System.out.println("Parchessi:rollButton.addActionListener():  after Roll: " + roll);
+					
+				}
 				Board.movePlayer(turnValue, roll);
 				repaint();
 				rollButton.setEnabled(false);
@@ -68,7 +80,7 @@ class Parchessi extends JFrame {
 
 		// Game Panel Stuff
 		mContainer = new JPanel();
-		rollView = new JLabel("Turn: Player " + displayValue + ";    Roll: ");
+		rollView = new JLabel("Turn: Player " + displayValue + ";    Dice Roll: ");
 
 		rollView.setBorder(new EmptyBorder(5, 5, 5, 5));
 		b.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,7 +92,8 @@ class Parchessi extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// setBounds(-900, 200, 725, 850);//Second Monitor Debugging
-		setBounds(20, 20, 725, 850);// Single Monitor
+		pack();
+		setBounds(20, 20, 900, 850);// Single Monitor
 		setVisible(true);
 	}
 
@@ -108,7 +121,7 @@ class Parchessi extends JFrame {
 		turnValue %= numPlayers;// Modulo this for infinite loop
 
 		displayValue = turnValue + 1;
-		rollView.setText("Turn: Player " + displayValue + ";    Roll: ");
+		rollView.setText("Turn: Player " + displayValue + ";    Dice Roll: ");
 		System.out.println("Parchessi:getNextTurn(): TurnValue: " + turnValue
 				+ "   DisplayValue: " + displayValue);
 	}
@@ -119,19 +132,36 @@ class Parchessi extends JFrame {
 	public static int roll() {
 		int display = turnValue + 1;
 		Random diceRoller = new Random();
-		roll = diceRoller.nextInt(6) + 1;// Roll first Dice
-		int roll2 = diceRoller.nextInt(6) + 1;// Roll second Dice
+		roll = diceRoller.nextInt(3) + 1;// Roll first Dice
+		int roll2 = diceRoller.nextInt(3) + 1;// Roll second Dice
 
 		if (roll == roll2) {
-			// Set Roll Again Condition to True
+			rollAgain = true;
+			System.out.println("Parchessi:roll(): Roll again set to true");
 		}
-		roll += roll2;
-		rollView.setText("Turn: Player " + display + ";    Roll: "
-				+ Integer.toString(roll));
-		System.out.println("Parchessi:roll(): Roll value " + roll);
+		rollView.setText("Turn: Player " + display + ";    Dice Roll: "	+ Integer.toString(roll) + " and " + Integer.toString(roll2));
+
+		System.out.println("Parchessi:roll(): Roll value " + roll + " and " + roll2);
 
 		// Now Update
+		roll += roll2;
 		return roll;
+	}
+
+		/*
+	 * Roll Dice Again, can only happen once
+	 */
+	public static int rollAgain() {
+		System.out.println("Parchessi:rollAgain(): entering this method");
+		Random diceRoller = new Random();
+		int roll1 = diceRoller.nextInt(6) + 1;// Roll first Dice
+		int roll2 = diceRoller.nextInt(6) + 1;// Roll second Dice
+
+		System.out.println("Parchessi:rollAgain(): Roll value " + roll1 + " and " + roll2);
+
+		// Now Update
+		roll1 += roll2;
+		return roll1;
 	}
 
 	/*
