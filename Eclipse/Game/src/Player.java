@@ -70,6 +70,17 @@ class Player extends JPanel {
 			t[i] = new Token(i, p.x, p.y, getColor());
 		}
 	}
+	
+	public ArrayList<String> getAvailableTokens(){
+		ArrayList<String> available = new ArrayList<String>();
+		for(int i = 0; i < 4; i ++){
+			if(!t[i].isSafe()){
+				available.add(Integer.toString(i));
+			}
+		}		
+		return available;
+	}
+	
 
 	public int getPID() {
 		return pid;
@@ -84,21 +95,26 @@ class Player extends JPanel {
 	 */
 	public int chooseToken() {
 		int tok = -1;
+		ArrayList<String> available = getAvailableTokens();
 		// return 0;
-		while (tok > 3 || tok < 0) {
-			String[] options = { "0", "1", "2", "3" };
-			String x = (String) JOptionPane.showInputDialog(null,
-					"Which Token Would You Like To Move? (WTWYLTM?)",
-					"Parcheesi", JOptionPane.QUESTION_MESSAGE, null, options,
-					autoSelectFreeToken());
+		if(available.size() > 0){
+			while (tok > 3 || tok < 0) {
+				String[] options = new String[available.size()];
+				options = available.toArray(options);
+				String x = (String) JOptionPane.showInputDialog(null,
+						"Which Token Would You Like To Move? (WTWYLTM?)",
+						"Parcheesi", JOptionPane.QUESTION_MESSAGE, null, options,
+						autoSelectFreeToken());
 
-			if (x == null) {
-				tok = autoSelectFreeToken();
-			} else {
-				tok = Integer.parseInt(x);
+				if (x == null) {
+					tok = autoSelectFreeToken();
+				} else {
+					tok = Integer.parseInt(x);
+				}
+				// tok = Integer.parseInt(x);
 			}
-			// tok = Integer.parseInt(x);
 		}
+		
 		return tok;
 	}
 
