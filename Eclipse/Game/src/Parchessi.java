@@ -48,11 +48,14 @@ class Parchessi extends JFrame {
 					System.out.println("Parchessi:rollButton.addActionListener(): Rolling Again, automatically");
 					System.out.println("Parchessi:rollButton.addActionListener(): before Roll: " + roll);
 					roll += rollAgain();
-					System.out.println("Parchessi:rollButton.addActionListener():  after Roll: " + roll);
-					
+					System.out.println("Parchessi:rollButton.addActionListener():  after Roll: " + roll);		
 				}
 				Board.movePlayer(turnValue, roll);
 				repaint();
+				int res = Board.checkWin();
+				if (res > -1) {
+					gameHasBeenWon(res);
+				}
 				rollButton.setEnabled(false);
 				nextTurn.setEnabled(true);
 			}
@@ -65,10 +68,7 @@ class Parchessi extends JFrame {
 				rollButton.setEnabled(true);
 				nextTurn.setEnabled(false);
 				getNextTurn();
-				int res = Board.checkWin();
-				if (res > -1) {
-					gameHasBeenWon(res);
-				}
+				
 			}
 		});
 
@@ -96,6 +96,8 @@ class Parchessi extends JFrame {
 		setBounds(20, 20, 900, 850);// Single Monitor
 		setVisible(true);
 	}
+	
+	
 
 	public static void gameHasBeenWon(int id) {
 		JOptionPane.showMessageDialog(null, "Congrats Player " + id
@@ -132,8 +134,8 @@ class Parchessi extends JFrame {
 	public static int roll() {
 		int display = turnValue + 1;
 		Random diceRoller = new Random();
-		roll = diceRoller.nextInt(3) + 1;// Roll first Dice
-		int roll2 = diceRoller.nextInt(3) + 1;// Roll second Dice
+		roll = diceRoller.nextInt(6) + 1;// Roll first Dice
+		int roll2 = diceRoller.nextInt(6) + 1;// Roll second Dice
 
 		if (roll == roll2) {
 			rollAgain = true;
@@ -197,6 +199,7 @@ class Parchessi extends JFrame {
 	 */
 	public static void main(String[] args) {
 		gameFrame = new Parchessi();
+		//Board.debugLoadPoints();
 	}
 
 }
