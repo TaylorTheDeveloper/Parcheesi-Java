@@ -24,6 +24,9 @@ How to run:
 Just run the executable!
 * java -jar parchessi.jar
 
+Or, you can run ./compile from the command line in the Parchessi/src folder. 
+And then run java Parchessi to play
+
 Alternativley, you can open up the source. It's already setup to import into Eclipse running JDK 1.7. 
 If you compile it yourself, you can go to the main methood in Parchessi.java and look for the commented code block, which should look like this(line 246):
 
