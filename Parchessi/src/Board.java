@@ -31,15 +31,17 @@ public class Board extends JPanel {
 			p[i] = new Player(i);
 		}
 	}
+
 	/*
-	 * Function to pre-load the points for all pieces to aid in debugging traversal issues
+	 * Function to pre-load the points for all pieces to aid in debugging
+	 * traversal issues
 	 */
-public static void debugLoadPoints(){
-	for (int i = 0; i < numGamePlayers; i++) {
-		for (int j = 0; j < numGamePlayers; j++) {
-			p[i].t[j].setPositionIndex(61);
+	public static void debugLoadPoints() {
+		for (int i = 0; i < numGamePlayers; i++) {
+			for (int j = 0; j < numGamePlayers; j++) {
+				p[i].t[j].setPositionIndex(61);
+			}
 		}
-	}
 	}
 
 	/*
@@ -66,35 +68,19 @@ public static void debugLoadPoints(){
 
 		p[tv].t[tok].setPositionIndex(i + r);// Set the current Index + the roll
 												// value
-		int z = p[tv].t[tok].getPositionIndex() + p[tv].getOffset();// Get the
-																	// current
-																	// index
-																	// (i+r) for
-																	// the point
-																	// data
+		// Get the current index (i+r) for the point data
+		int z = p[tv].t[tok].getPositionIndex() + p[tv].getOffset();
 
 		// Check if we've made a complete traversal. This condition should only
 		// happen once
 		if (p[tv].t[tok].checkTraversal() > -1) {
-			int moves = p[tv].t[tok].checkTraversal() - 1;
-			if (moves > p[tv].specialPointData.size()) {
-				moves = p[tv].specialPointData.size();
-				System.out
-						.println("Board: ERROR 0001: Tried to move out of special range");
-			}
-			p[tv].t[tok].setX(p[tv].specialPointData.get(moves).x + 10);
-			p[tv].t[tok].setY(p[tv].specialPointData.get(moves).y + 10);
 			p[tv].t[tok].setSafeZone(true);
 		}
 		// If we have made a complete traversal, go down the special lane
 		if (p[tv].t[tok].getSafeZone()) {
 			if (z > p[tv].specialPointData.size()) {
 				z = p[tv].specialPointData.size() - 1;
-				System.out
-						.println("Board: ERROR 0002: Tried to move out of special range");
 			}
-			p[tv].t[tok].setX(p[tv].specialPointData.get(z).x + 10);
-			p[tv].t[tok].setY(p[tv].specialPointData.get(z).y + 10);
 		}// Otherwise, continue moving
 		else {
 			if (z > points.size()) {

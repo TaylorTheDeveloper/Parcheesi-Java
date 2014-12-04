@@ -18,7 +18,8 @@ class Player extends JPanel {
 	private Color color;
 	private int offset;
 	public Token[] t;
-	public final ArrayList<Point> specialPointData;// Point Data for Special Traversals
+	public final ArrayList<Point> specialPointData;// Point Data for Special
+													// Traversals
 
 	// Constructor Expects player one to logically be '0', so we increment it to
 	// '1'
@@ -70,17 +71,16 @@ class Player extends JPanel {
 			t[i] = new Token(i, p.x, p.y, getColor());
 		}
 	}
-	
-	public ArrayList<String> getAvailableTokens(){
+
+	public ArrayList<String> getAvailableTokens() {
 		ArrayList<String> available = new ArrayList<String>();
-		for(int i = 0; i < 4; i ++){
-			if(!t[i].isSafe()){
+		for (int i = 0; i < 4; i++) {
+			if (!t[i].isSafe()) {
 				available.add(Integer.toString(i));
 			}
-		}		
+		}
 		return available;
 	}
-	
 
 	public int getPID() {
 		return pid;
@@ -97,14 +97,14 @@ class Player extends JPanel {
 		int tok = -1;
 		ArrayList<String> available = getAvailableTokens();
 		// return 0;
-		if(available.size() > 0){
+		if (available.size() > 0) {
 			while (tok > 3 || tok < 0) {
 				String[] options = new String[available.size()];
 				options = available.toArray(options);
 				String x = (String) JOptionPane.showInputDialog(null,
 						"Which Token Would You Like To Move? (WTWYLTM?)",
-						"Parcheesi", JOptionPane.QUESTION_MESSAGE, null, options,
-						autoSelectFreeToken());
+						"Parcheesi", JOptionPane.QUESTION_MESSAGE, null,
+						options, autoSelectFreeToken());
 
 				if (x == null) {
 					tok = autoSelectFreeToken();
@@ -114,7 +114,7 @@ class Player extends JPanel {
 				// tok = Integer.parseInt(x);
 			}
 		}
-		
+
 		return tok;
 	}
 
@@ -158,12 +158,16 @@ class Player extends JPanel {
 	 * condition
 	 */
 	public boolean hasWon() {
-		if (t[0].isSafe() && t[1].isSafe() && t[2].isSafe() && t[3].isSafe()) {
-			System.out.println("Player: Player " + pid + " Has Won");
-			return true;
-		} else {
-			return false;
+		for (int i = 0; i < 4; i++) {// Return False if any aren't safe
+			if (!t[i].isSafe()) {
+				return false;
+			} else {
+				System.out.println("Player:hasWon(): Player " + pid + " token "
+						+ i + " is safe");
+			}
 		}
+		System.out.println("Player: Player " + pid + " Has Won");
+		return true;
 	}
 
 	/*
@@ -225,8 +229,12 @@ class Player extends JPanel {
 					break;
 				default:
 				}
-			} else {// Else Draw on Board
-				drawToken(g, getX(), getY());
+			} else {
+				if (getPositionIndex() >= 63) {// Else Draw Safe zone
+					drawToken(g, 335 + 10, 355 + 10);
+				} else {// Else Draw on Board
+					drawToken(g, getX(), getY());
+				}
 			}
 
 		}
@@ -242,6 +250,8 @@ class Player extends JPanel {
 				System.out.println("Player:Token:checkTraversal(): Token " + id
 						+ " is on last eight");
 				lastEight = true;
+				System.out.println("PI: " + getPositionIndex() + "   "
+						+ (getPositionIndex() % SAFE));
 				return getPositionIndex() % SAFE;
 			} else {
 				return -1;
@@ -267,8 +277,8 @@ class Player extends JPanel {
 		 */
 		public boolean isSafe() {
 			if (index >= SAFE) {
-				System.out.println("Player:Token:isSafe(): Token " + id
-						+ " is safe");
+				// System.out.println("Player:Token:isSafe(): Token " + id +
+				// " is safe");
 				return true;
 			} else {
 				return false;

@@ -1,6 +1,10 @@
+import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -29,7 +33,7 @@ class Parchessi extends JFrame {
 	 * Parcheesi Game Constructor
 	 */
 	public Parchessi() {
-		//rollAgain is initially false
+		// rollAgain is initially false
 		rollAgain = false;
 		// Set and Initialize Number of Players
 		turnValue = 0;
@@ -42,13 +46,19 @@ class Parchessi extends JFrame {
 		rollButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				Parchessi.roll();
-				while(rollAgain == true){
-					rollAgain = false;//Set to false imediatley
-					System.out.println("Parchessi:rollButton.addActionListener(): Roll again set to false");
-					System.out.println("Parchessi:rollButton.addActionListener(): Rolling Again, automatically");
-					System.out.println("Parchessi:rollButton.addActionListener(): before Roll: " + roll);
+				while (rollAgain == true) {
+					rollAgain = false;// Set to false imediatley
+					System.out
+							.println("Parchessi:rollButton.addActionListener(): Roll again set to false");
+					System.out
+							.println("Parchessi:rollButton.addActionListener(): Rolling Again, automatically");
+					System.out
+							.println("Parchessi:rollButton.addActionListener(): before Roll: "
+									+ roll);
 					roll += rollAgain();
-					System.out.println("Parchessi:rollButton.addActionListener():  after Roll: " + roll);		
+					System.out
+							.println("Parchessi:rollButton.addActionListener():  after Roll: "
+									+ roll);
 				}
 				Board.movePlayer(turnValue, roll);
 				repaint();
@@ -68,7 +78,7 @@ class Parchessi extends JFrame {
 				rollButton.setEnabled(true);
 				nextTurn.setEnabled(false);
 				getNextTurn();
-				
+
 			}
 		});
 
@@ -80,7 +90,8 @@ class Parchessi extends JFrame {
 
 		// Game Panel Stuff
 		mContainer = new JPanel();
-		rollView = new JLabel("Turn: Player " + displayValue + ";    Dice Roll: ");
+		rollView = new JLabel("Turn: Player " + displayValue
+				+ ";    Dice Roll: ");
 
 		rollView.setBorder(new EmptyBorder(5, 5, 5, 5));
 		b.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -96,8 +107,6 @@ class Parchessi extends JFrame {
 		setBounds(20, 20, 900, 850);// Single Monitor
 		setVisible(true);
 	}
-	
-	
 
 	public static void gameHasBeenWon(int id) {
 		JOptionPane.showMessageDialog(null, "Congrats Player " + id
@@ -124,8 +133,8 @@ class Parchessi extends JFrame {
 
 		displayValue = turnValue + 1;
 		rollView.setText("Turn: Player " + displayValue + ";    Dice Roll: ");
-		System.out.println("Parchessi:getNextTurn(): TurnValue: " + turnValue
-				+ "   DisplayValue: " + displayValue);
+		System.out.println("\n\nParchessi:getNextTurn(): Player "
+				+ displayValue);
 	}
 
 	/*
@@ -138,19 +147,22 @@ class Parchessi extends JFrame {
 		int roll2 = diceRoller.nextInt(6) + 1;// Roll second Dice
 
 		if (roll == roll2) {
-			rollAgain = true;
-			System.out.println("Parchessi:roll(): Roll again set to true");
+			// Removed Due to miscalculations 12/3/14
+			// rollAgain = true;
+			// System.out.println("Parchessi:roll(): Roll again set to true");
 		}
-		rollView.setText("Turn: Player " + display + ";    Dice Roll: "	+ Integer.toString(roll) + " and " + Integer.toString(roll2));
+		rollView.setText("Turn: Player " + display + ";    Dice Roll: "
+				+ Integer.toString(roll) + " and " + Integer.toString(roll2));
 
-		System.out.println("Parchessi:roll(): Roll value " + roll + " and " + roll2);
+		System.out.println("Parchessi:roll(): Roll value " + roll + " and "
+				+ roll2);
 
 		// Now Update
 		roll += roll2;
 		return roll;
 	}
 
-		/*
+	/*
 	 * Roll Dice Again, can only happen once
 	 */
 	public static int rollAgain() {
@@ -159,7 +171,8 @@ class Parchessi extends JFrame {
 		int roll1 = diceRoller.nextInt(6) + 1;// Roll first Dice
 		int roll2 = diceRoller.nextInt(6) + 1;// Roll second Dice
 
-		System.out.println("Parchessi:rollAgain(): Roll value " + roll1 + " and " + roll2);
+		System.out.println("Parchessi:rollAgain(): Roll value " + roll1
+				+ " and " + roll2);
 
 		// Now Update
 		roll1 += roll2;
@@ -177,7 +190,7 @@ class Parchessi extends JFrame {
 					JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
 			if (x == null) {
-				numPlayers = 1;
+				System.exit(0);
 			} else {
 				numPlayers = Integer.parseInt(x);
 			}
@@ -194,12 +207,54 @@ class Parchessi extends JFrame {
 		gameFrame = new Parchessi();
 	}
 
+	public static void PlayAI() throws AWTException {
+		Robot bot = new Robot();
+		try {
+			Thread.sleep(500); // 1000 milliseconds is one second.
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		bot.mouseMove(520, 845);
+		bot.mousePress(InputEvent.BUTTON1_MASK);
+		bot.mouseRelease(InputEvent.BUTTON1_MASK);
+		try {
+			Thread.sleep(500); // 1000 milliseconds is one second.
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		bot.keyPress(KeyEvent.VK_ENTER);
+		bot.keyRelease(KeyEvent.VK_ENTER);
+		try {
+			Thread.sleep(500); // 1000 milliseconds is one second.
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		bot.mouseMove(540, 845);
+		bot.mousePress(InputEvent.BUTTON1_MASK);
+		bot.mouseRelease(InputEvent.BUTTON1_MASK);
+	}
+
+	public static Board getBoard() {
+		return b;
+	}
+
 	/*
 	 * Main Game Method
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AWTException {
 		gameFrame = new Parchessi();
-		//Board.debugLoadPoints();
+		/*
+		 * Uncomment this code below if you wish for it to run a game
+		 * automatically for you. This feature was used while debugging to save
+		 * me click time! All you are required to input is the number of players
+		 * (1-4)
+		 */
+		//
+		// int res = getBoard().checkWin();
+		// while(res < 0){
+		// PlayAI();
+		// res = getBoard().checkWin();
+		// }
 	}
 
 }
